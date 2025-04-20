@@ -1,6 +1,7 @@
+#include "./src/exec.h"
 #include <stdio.h>
 
-int main(void) {
-  printf("Hello, World!\n");
+int main(int argc, char *argv[]) {
+  exec(argc, argv);
   return 0;
 }
