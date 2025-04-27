@@ -51,7 +51,7 @@ options_t collect_options(int argc, char *argv[]) {
         terminate_no_path_flag();
       }
 
-      if (strcmp(get_file_extension(arg), EXT) != 0) {
+      if (strcmp(get_file_ext(arg), EXT) != 0) {
         terminate_invalid_ext();
       }
 
