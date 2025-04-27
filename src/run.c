@@ -11,7 +11,7 @@ const char EXT[] = "js";
 
 const char F_PATH[] = "--path=";
 
-// Collect options
+// ===================
 
 void terminate_no_path_flag() {
   printf("%s flag is required\n", F_PATH);
@@ -23,8 +23,18 @@ void terminate_invalid_ext() {
   exit(1);
 }
 
-void terminate_internal() {
-  printf("Internal error\n");
+void terminate_mem() {
+  printf("Memory allocation failed\n");
+  exit(1);
+}
+
+void terminate_file_not_found() {
+  printf("File not found\n");
+  exit(1);
+}
+
+void terminate_unexpected() {
+  printf("Unexpected error\n");
   exit(1);
 }
 
@@ -58,10 +68,14 @@ options_t collect_options(int argc, char *argv[]) {
       options.path = malloc((path_len + 1) * sizeof(char));
 
       if (options.path == NULL) {
-        terminate_internal();
+        terminate_mem();
       }
 
       slice_str(options.path, arg, flag_len, arg_len - flag_len);
+
+      if (options.path == NULL) {
+        terminate_unexpected();
+      }
     } else {
       terminate_no_path_flag();
     }
@@ -70,11 +84,47 @@ options_t collect_options(int argc, char *argv[]) {
   return options;
 }
 
-// Run
+typedef struct {
+  char *content;
+  long size;
+} file_t;
+
+file_t get_file_content(const char path[]) {
+  FILE *f = fopen(path, "rb");
+
+  if (f == NULL) {
+    terminate_file_not_found();
+  }
+
+  fseek(f, 0, SEEK_END);
+  long fsize = ftell(f);
+  rewind(f);
+
+  char *content = malloc(fsize + 1);
+
+  if (content == NULL) {
+    fclose(f);
+    terminate_mem();
+  }
+
+  fread(content, fsize, 1, f);
+  fclose(f);
+
+  content[fsize] = 0;
+
+  return (file_t){.content = content, .size = fsize};
+}
 
 int run(int argc, char *argv[]) {
   options_t options = collect_options(argc, argv);
-  printf("Path: %s\n", options.path);
+  file_t file = get_file_content(options.path);
+
+  printf("Running %s\n", options.path);
+  printf("Content:\n%s\n", file.content);
+  printf("Size:\n%ld\n", file.size);
+
+  free(file.content);
   free(options.path);
+
   return 0;
 }
