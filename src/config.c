@@ -1,7 +1,5 @@
 #include "config.h"
 
-const char EXT[] = "js";
+const char EXEC_FILE_EXT[] = "js";
 
-// Execution flags
-
-const char EF_PATH[] = "--path=";
+const char EXEC_FLAG_PATH[] = "--path=";

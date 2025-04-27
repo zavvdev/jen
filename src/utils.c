@@ -43,7 +43,7 @@ exec_options_t ALLOC_get_exec_options(int argc, char *argv[]) {
   const char MSG_NO_FLAG[] = "%s flag is required\n";
 
   if (argc < 2) {
-    printf(MSG_NO_FLAG, EF_PATH);
+    printf(MSG_NO_FLAG, EXEC_FLAG_PATH);
     exit(1);
   }
 
@@ -53,17 +53,17 @@ exec_options_t ALLOC_get_exec_options(int argc, char *argv[]) {
     char *arg = argv[i];
     int arg_len = strlen(arg);
 
-    if (strstr(arg, EF_PATH) != NULL) {
-      int flag_len = strlen(EF_PATH);
+    if (strstr(arg, EXEC_FLAG_PATH) != NULL) {
+      int flag_len = strlen(EXEC_FLAG_PATH);
       int path_len = arg_len - flag_len;
 
       if (path_len <= 0) {
-        printf(MSG_NO_FLAG, EF_PATH);
+        printf(MSG_NO_FLAG, EXEC_FLAG_PATH);
         exit(1);
       }
 
-      if (strcmp(get_file_ext(arg), EXT) != 0) {
-        printf("File should have \"%s\" extension\n", EXT);
+      if (strcmp(get_file_ext(arg), EXEC_FILE_EXT) != 0) {
+        printf("File should have \"%s\" extension\n", EXEC_FILE_EXT);
         exit(1);
       }
 
@@ -81,7 +81,7 @@ exec_options_t ALLOC_get_exec_options(int argc, char *argv[]) {
         exit(1);
       }
     } else {
-      printf(MSG_NO_FLAG, EF_PATH);
+      printf(MSG_NO_FLAG, EXEC_FLAG_PATH);
       exit(1);
     }
   }
