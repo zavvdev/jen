@@ -3,14 +3,23 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Config
+
+const char EXT[] = "js";
+
 // Flags
 
-const char *F_PATH = "--path=";
+const char F_PATH[] = "--path=";
 
 // Collect options
 
 void terminate_no_path_flag() {
   printf("%s flag is required\n", F_PATH);
+  exit(1);
+}
+
+void terminate_invalid_ext() {
+  printf("File should have \"%s\" extension\n", EXT);
   exit(1);
 }
 
@@ -40,6 +49,10 @@ options_t collect_options(int argc, char *argv[]) {
 
       if (path_len <= 0) {
         terminate_no_path_flag();
+      }
+
+      if (strcmp(get_file_extension(arg), EXT) != 0) {
+        terminate_invalid_ext();
       }
 
       options.path = malloc((path_len + 1) * sizeof(char));
