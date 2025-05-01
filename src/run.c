@@ -1,3 +1,4 @@
+#include "lexer/lexer.h"
 #include "types.h"
 #include "utils.h"
 #include <stdio.h>
@@ -10,9 +11,7 @@ int run(int argc, char *argv[]) {
   exec_file_descriptor_t file_descriptor =
       ALLOC_get_exec_file_descriptor(exec_options.path);
 
-  printf("Running %s\n", exec_options.path);
-  printf("Content:\n%s\n", file_descriptor.content);
-  printf("Size:\n%ld\n", file_descriptor.size);
+  tokenize(file_descriptor.size, file_descriptor.content);
 
   FREE_get_exec_file_descriptor(&file_descriptor);
   FREE_get_exec_options(&exec_options);
