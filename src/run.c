@@ -14,8 +14,8 @@ int run(int argc, char *argv[]) {
   printf("Content:\n%s\n", file_descriptor.content);
   printf("Size:\n%ld\n", file_descriptor.size);
 
-  free(file_descriptor.content);
-  free(exec_options.path);
+  FREE_get_exec_file_descriptor(&file_descriptor);
+  FREE_get_exec_options(&exec_options);
 
   return 0;
 }

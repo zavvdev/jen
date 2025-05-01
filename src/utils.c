@@ -89,6 +89,13 @@ exec_options_t ALLOC_get_exec_options(int argc, char *argv[]) {
   return options;
 }
 
+void FREE_get_exec_options(exec_options_t *options) {
+  if (options->path != NULL) {
+    free(options->path);
+    options->path = NULL;
+  }
+}
+
 /**
  * INCLUDES MEMORY ALLOCATIONS
  *
@@ -123,4 +130,11 @@ exec_file_descriptor_t ALLOC_get_exec_file_descriptor(const char path[]) {
   content[fsize] = 0;
 
   return (exec_file_descriptor_t){.content = content, .size = fsize};
+}
+
+void FREE_get_exec_file_descriptor(exec_file_descriptor_t *file_descriptor) {
+  if (file_descriptor->content != NULL) {
+    free(file_descriptor->content);
+    file_descriptor->content = NULL;
+  }
 }
