@@ -6,15 +6,15 @@
 #include <string.h>
 
 int run(int argc, char *argv[]) {
-  exec_options_t exec_options = ALLOC_get_exec_options(argc, argv);
+  exec_options_t exec_options = alloc_get_exec_options(argc, argv);
 
   exec_file_descriptor_t file_descriptor =
-      ALLOC_get_exec_file_descriptor(exec_options.path);
+      alloc_get_exec_file_descriptor(exec_options.path);
 
   tokenize(file_descriptor.size, file_descriptor.content);
 
-  FREE_get_exec_file_descriptor(&file_descriptor);
-  FREE_get_exec_options(&exec_options);
+  free_get_exec_file_descriptor(&file_descriptor);
+  free_get_exec_options(&exec_options);
 
   return 0;
 }

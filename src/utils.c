@@ -39,7 +39,7 @@ const char *get_file_ext(const char filename[]) {
  * Allocations:
  * - options.path
  */
-exec_options_t ALLOC_get_exec_options(int argc, char *argv[]) {
+exec_options_t alloc_get_exec_options(int argc, char *argv[]) {
   const char MSG_NO_FLAG[] = "%s flag is required\n";
 
   if (argc < 2) {
@@ -89,7 +89,7 @@ exec_options_t ALLOC_get_exec_options(int argc, char *argv[]) {
   return options;
 }
 
-void FREE_get_exec_options(exec_options_t *options) {
+void free_get_exec_options(exec_options_t *options) {
   if (options->path != NULL) {
     free(options->path);
     options->path = NULL;
@@ -104,7 +104,7 @@ void FREE_get_exec_options(exec_options_t *options) {
  * Allocations:
  * - file.content
  */
-exec_file_descriptor_t ALLOC_get_exec_file_descriptor(const char path[]) {
+exec_file_descriptor_t alloc_get_exec_file_descriptor(const char path[]) {
   FILE *f = fopen(path, "rb");
 
   if (f == NULL) {
@@ -132,7 +132,7 @@ exec_file_descriptor_t ALLOC_get_exec_file_descriptor(const char path[]) {
   return (exec_file_descriptor_t){.content = content, .size = fsize};
 }
 
-void FREE_get_exec_file_descriptor(exec_file_descriptor_t *file_descriptor) {
+void free_get_exec_file_descriptor(exec_file_descriptor_t *file_descriptor) {
   if (file_descriptor->content != NULL) {
     free(file_descriptor->content);
     file_descriptor->content = NULL;
